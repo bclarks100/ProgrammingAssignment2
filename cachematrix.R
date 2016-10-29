@@ -6,14 +6,14 @@
 ## allowing for retreval or the initial calculation
 
 makeCacheMatrix <- function(x = matrix()) {
-		inv <- NULL
+		minv <- NULL
 		set <- function(y){
 			x <<- y
-			inv <<- NULL
+			minv <<- NULL
 		}
 		get <- function() x
-		setinverse <- function(inverse) inv <<- inverse
-		getinverse <- function() inv
+		setinverse <- function(inverse) minv <<- inverse
+		getinverse <- function() minv
 		list(set = set, get = get
 			, setinverse = setinverse
 			, getinverse = getinverse
@@ -25,14 +25,14 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-		inv <- x$getinverse()
-        if(!is.null(inv)) {
+		minv <- x$getinverse()
+        if(!is.null(minv)) {
                 message("Inverse already calculated. 
 					Getting matrix inverse.")
-                return(inv)
+                return(minv)
         }
         data <- x$get()
-        inv <- solve(data, ...)
-        x$setinverse(inv)
-        inv
+        minv <- solve(data, ...)
+        x$setinverse(minv)
+        minv
 }
